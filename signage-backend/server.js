@@ -16,10 +16,15 @@ app.get('/', (req, res) => {
   res.send('Signage backend API running');
 });
 
+
 // Import and use routes
 const itemRoutes = require('./routes/items');
+const categoryRoutes = require('./routes/categories');
+const subitemRoutes = require('./routes/subitems2');
 const contactRoutes = require('./routes/contact');
 app.use('/api/items', itemRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/subitems', subitemRoutes);
 app.use('/api/contact', contactRoutes);
 
 const PORT = process.env.PORT || 5000;

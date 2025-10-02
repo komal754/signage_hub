@@ -2,10 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Item = require('../models/Item');
 
-// Get all items
+// Get all items (populate category)
 router.get('/', async (req, res) => {
-  const items = await Item.find();
+  const items = await Item.find().populate('category');
   res.json(items);
+});
+
+// Get item by id
+router.get('/:id', async (req, res) => {
+  const item = await Item.findById(req.params.id).populate('category');
+  if (!item) return res.status(404).json({ error: 'Item not found' });
+  res.json(item);
 });
 
 // Add new item
