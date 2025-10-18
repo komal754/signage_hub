@@ -22,10 +22,12 @@ const itemRoutes = require('./routes/items');
 const categoryRoutes = require('./routes/categories');
 const subitemRoutes = require('./routes/subitems2');
 const contactRoutes = require('./routes/contact');
+const carouselRoutes = require('./routes/carousel');
 app.use('/api/items', itemRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/subitems', subitemRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/carousel', carouselRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
