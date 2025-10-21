@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
-const { notifyAdmin, notifyCustomer } = require('../utils/notify');
+const { notifyAdmin } = require('../utils/notify');
 
 // Get all contact submissions
 router.get('/', async (req, res) => {
@@ -12,8 +12,8 @@ router.get('/', async (req, res) => {
 // Add new contact submission
 router.post('/', async (req, res) => {
   const { name, email, phone, message } = req.body;
-  if (!name || !phone || !message) {
-    return res.status(400).json({ error: 'Name, phone, and message are required.' });
+  if (!name || !email || !phone || !message) {
+    return res.status(400).json({ error: 'Name, email, phone, and message are required.' });
   }
   const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
   const phoneRegex = /^\+?[0-9]{10,15}$/;
