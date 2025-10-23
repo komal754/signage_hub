@@ -37,7 +37,7 @@ export default function PortfolioPage() {
               <Image src={project.img} alt={project.title} width={400} height={192} className="w-full h-48 object-cover mb-4 rounded" />
               <h2 className="text-xl font-bold mb-2 text-gray-900 text-center">{project.title}</h2>
               <p className="text-gray-600 text-center mb-2">Client: {project.client}</p>
-              <blockquote className="italic text-teal-600 text-center">"{project.testimonial}"</blockquote>
+              <blockquote className="italic text-teal-600 text-center">&quot;{project.testimonial}&quot;</blockquote>
             </div>
           ))}
         </div>

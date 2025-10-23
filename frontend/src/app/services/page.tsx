@@ -180,14 +180,14 @@ export default function ServicesPage() {
         const items = await itemsRes.json();
         const subitems = await subitemsRes.json();
         const itemsWithSubitems = items.map((item: Service & { _id: string; category?: string | { _id: string } }) => {
-          const subItemsForItem = subitems.filter((sub: SubItem & { item?: string | { _id: string } }) => {
-            if (sub.item && typeof sub.item === 'object' && ' _id' in sub.item) {
+          const subItemsForItem = subitems.filter((sub: SubItem & { item?: string | { _id: string }; description?: string }) => {
+            if (sub.item && typeof sub.item === 'object' && '_id' in sub.item) {
               return (sub.item as { _id: string })._id === item._id;
             }
             return sub.item === item._id;
-          }).map((sub: SubItem) => ({
+          }).map((sub: SubItem & { description?: string }) => ({
             name: sub.name,
-            desc: (sub as any).description ?? sub.desc,
+            desc: sub.description ?? sub.desc,
             image: sub.image
           }));
           return {

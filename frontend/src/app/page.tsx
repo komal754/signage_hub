@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import FloatingContactButton from "@/components/FloatingContactButton";
@@ -45,7 +44,7 @@ const portfolio = [
 export default function Home() {
     const [category, setCategory] = useState<"signage" | "painting">("signage");
 
-  const [sticky, setSticky] = useState(false);
+  // Removed unused sticky state
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const carouselImages = useCarouselImages();
@@ -76,9 +75,7 @@ const collageImages: Record<"signage" | "painting", string[]> = {
 
   // Navbar sticky effect
   useEffect(() => {
-    const handleScroll = () => setSticky(window.scrollY > 80);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+  // Removed sticky scroll effect since sticky state is unused
   }, []);
 
   // Auto-scroll carousel effect
