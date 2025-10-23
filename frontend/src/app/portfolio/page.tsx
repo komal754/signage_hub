@@ -1,6 +1,7 @@
 "use client";
 import { Navbar, Footer } from "@/components/SharedLayout";
 import FloatingContactButton from "@/components/FloatingContactButton";
+import Image from "next/image";
 
 const projects = [
   {
@@ -33,7 +34,7 @@ export default function PortfolioPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {projects.map((project, idx) => (
             <div key={idx} className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col items-center p-6">
-              <img src={project.img} alt={project.title} className="w-full h-48 object-cover mb-4 rounded" />
+              <Image src={project.img} alt={project.title} width={400} height={192} className="w-full h-48 object-cover mb-4 rounded" />
               <h2 className="text-xl font-bold mb-2 text-gray-900 text-center">{project.title}</h2>
               <p className="text-gray-600 text-center mb-2">Client: {project.client}</p>
               <blockquote className="italic text-teal-600 text-center">"{project.testimonial}"</blockquote>

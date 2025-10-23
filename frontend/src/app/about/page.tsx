@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Navbar, Footer } from "@/components/SharedLayout";
+import Image from "next/image";
 import FloatingContactButton from "@/components/FloatingContactButton";
 
 export default function AboutUsPage() {
@@ -52,11 +53,11 @@ export default function AboutUsPage() {
           transition={{ duration: 0.6 }}
           className="mt-20 max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center"
         >
-          <img
-            // src="/about/product1.png"
+          <Image
             src="https://res.cloudinary.com/dnonho9dg/image/upload/v1761059393/name_csv3cv.jpg"
-
             alt="Our Story"
+            width={800}
+            height={400}
             className="w-full rounded-2xl shadow-lg object-cover h-80 md:h-[400px]"
           />
           <div>
@@ -150,15 +151,21 @@ function ImageSlider({ images }: { images: { src: string; alt: string }[] }) {
   return (
     <div className="relative w-full rounded-2xl shadow-lg overflow-hidden">
       <AnimatePresence mode="wait">
-        <motion.img
+        <motion.div
           key={currentIndex}
-          src={images[currentIndex].src}
-          alt={images[currentIndex].alt}
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
           className="w-full object-cover h-80 md:h-[400px]"
-        />
+        >
+          <Image
+            src={images[currentIndex].src}
+            alt={images[currentIndex].alt}
+            width={800}
+            height={400}
+            className="w-full object-cover h-80 md:h-[400px]"
+          />
+        </motion.div>
       </AnimatePresence>
 
       {/* Left Arrow */}

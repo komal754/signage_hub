@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -94,10 +95,12 @@ const collageImages: Record<"signage" | "painting", string[]> = {
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-800 px-0 sm:px-4">
         <div className="absolute inset-0 bg-gradient-radial from-teal-500/20 via-transparent to-transparent blur-3xl" />
   <div className="flex flex-col lg:flex-row items-center justify-center gap-8 relative w-full max-w-xs sm:max-w-md lg:max-w-3xl mx-auto">
-          <img
+          <Image
             src="/logo.png"
             alt="Signage Logo"
-            className="w-32 h-32 animate-[pulse_2s_infinite] drop-shadow-[0_0_40px_#14b8a6] mx-auto"
+            width={128}
+            height={128}
+            className="animate-[pulse_2s_infinite] drop-shadow-[0_0_40px_#14b8a6] mx-auto"
           />
           <span className="mt-6 text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-300 text-3xl font-extrabold tracking-[0.3em] animate-fade-in text-center">
             The Ultimate Advertising Solution
@@ -118,7 +121,7 @@ const collageImages: Record<"signage" | "painting", string[]> = {
   {/* Navbar */}
       <nav className="w-full px-0 sm:px-4 md:px-8 py-4 flex items-center justify-between fixed top-0 z-50 bg-black/40 backdrop-blur-md shadow-lg transition-all duration-500">
         <div className="flex items-center gap-4">
-          <img src="/logo.png" alt="Logo" className="w-20 h-20 rounded-md shadow-md" />
+          <Image src="/logo.png" alt="Logo" width={80} height={80} className="rounded-md shadow-md" />
           <span className="text-white text-2xl font-extrabold tracking-wide">
             Signage & Printing Workshop
           </span>
@@ -138,18 +141,18 @@ const collageImages: Record<"signage" | "painting", string[]> = {
         </div>
 
         <div className={`flex-col md:flex md:flex-row gap-8 absolute md:static bg-black/90 md:bg-transparent w-full md:w-auto left-0 top-16 md:top-0 transition-all duration-300 ${isOpen ? "flex p-4" : "hidden md:flex"}`}>
-          <a href="/services" className="text-gray-200 hover:text-white relative font-medium group transition">
+          <Link href="/services" className="text-gray-200 hover:text-white relative font-medium group transition">
             Services
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
-          </a>
-          <a href="/about" className="text-gray-200 hover:text-white relative font-medium group transition">
+          </Link>
+          <Link href="/about" className="text-gray-200 hover:text-white relative font-medium group transition">
             About Us
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
-          </a>
-          <a href="/contact" className="text-gray-200 hover:text-white relative font-medium group transition">
+          </Link>
+          <Link href="/contact" className="text-gray-200 hover:text-white relative font-medium group transition">
             Contact
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
-          </a>
+          </Link>
         </div>
       </nav>
 
@@ -176,15 +179,15 @@ const collageImages: Record<"signage" | "painting", string[]> = {
             Modern, high-quality signage, printing & painting for every business.
           </motion.p>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="flex gap-4 flex-wrap justify-center">
-            <a href="/services">
+            <Link href="/services">
               <Button className="bg-teal-400 text-black hover:bg-teal-500 px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-teal-500/40 transition">View Services</Button>
-            </a>
-            <a href="/about">
+            </Link>
+            <Link href="/about">
               <Button className="bg-amber-400 text-white hover:bg-amber-500 px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-amber-400/40 transition">About Us</Button>
-            </a>
-            <a href="/contact">
+            </Link>
+            <Link href="/contact">
               <Button className="bg-teal-500 text-white hover:bg-teal-600 px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-teal-500/40 transition">Contact</Button>
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -375,9 +378,11 @@ const collageImages: Record<"signage" | "painting", string[]> = {
           }}
         >
           {/* Image */}
-          <img
+          <Image
             src={src}
             alt={`Gallery ${i + 1}`}
+            width={256}
+            height={320}
             className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover/box:scale-110"
           />
           {/* Overlay with Smooth Fade */}

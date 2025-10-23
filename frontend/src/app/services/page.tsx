@@ -179,15 +179,15 @@ export default function ServicesPage() {
         const categories = await categoriesRes.json();
         const items = await itemsRes.json();
         const subitems = await subitemsRes.json();
-        const itemsWithSubitems = items.map((item: any) => {
-          const subItemsForItem = subitems.filter((sub: any) => {
-            if (sub.item && typeof sub.item === 'object' && sub.item._id) {
-              return sub.item._id === item._id;
+        const itemsWithSubitems = items.map((item: Service & { _id: string; category?: string | { _id: string } }) => {
+          const subItemsForItem = subitems.filter((sub: SubItem & { item?: string | { _id: string } }) => {
+            if (sub.item && typeof sub.item === 'object' && ' _id' in sub.item) {
+              return (sub.item as { _id: string })._id === item._id;
             }
             return sub.item === item._id;
-          }).map((sub: any) => ({
+          }).map((sub: SubItem) => ({
             name: sub.name,
-            desc: sub.description,
+            desc: (sub as any).description ?? sub.desc,
             image: sub.image
           }));
           return {
@@ -195,16 +195,16 @@ export default function ServicesPage() {
             subItems: subItemsForItem
           };
         });
-        const grouped: Category[] = categories.map((cat: any) => ({
+        const grouped: Category[] = categories.map((cat: { name: string; _id: string }) => ({
           category: cat.name,
-          items: itemsWithSubitems.filter((item: any) => {
-            if (item.category && typeof item.category === 'object' && item.category._id) {
-              return item.category._id === cat._id;
+          items: itemsWithSubitems.filter((item: Service & { _id: string; category?: string | { _id: string } }) => {
+            if (item.category && typeof item.category === 'object' && '_id' in item.category) {
+              return (item.category as { _id: string })._id === cat._id;
             }
             return item.category === cat._id;
-          }).map((item: any) => ({
+          }).map((item: Service & { name: string; description?: string; _id: string; bestseller?: boolean; subItems?: SubItem[] }) => ({
             title: item.name,
-            desc: item.description,
+            desc: item.description ?? item.desc,
             bestseller: item.bestseller,
             subItems: item.subItems || []
           }))
@@ -212,7 +212,7 @@ export default function ServicesPage() {
         if (grouped.some(cat => cat.items.length > 0)) {
           setServices(grouped);
         }
-      } catch (err) {
+      } catch {
         setServices([]);
       }
     }

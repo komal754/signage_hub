@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -7,7 +8,7 @@ export function Navbar() {
   return (
     <nav className={`w-full px-8 py-4 flex items-center justify-between fixed top-0 z-50 bg-black/40 backdrop-blur-md shadow-lg transition-all duration-500`}>
       <div className="flex items-center gap-4">
-        <img src="/logo.png" alt="Logo" className="w-20 h-20 rounded-md shadow-md" />
+  <Image src="/logo.png" alt="Logo" width={80} height={80} className="rounded-md shadow-md" />
         <span className="text-white text-2xl font-extrabold tracking-wide">
           Signage & Printing Workshop
         </span>
@@ -25,22 +26,23 @@ export function Navbar() {
         </button>
       </div>
       <div className={`flex-col md:flex md:flex-row gap-8 absolute md:static bg-black/90 md:bg-transparent w-full md:w-auto left-0 top-16 md:top-0 transition-all duration-300 ${isOpen ? "flex p-4" : "hidden md:flex"}`}>
-        <a href="/" className="text-gray-200 hover:text-white relative font-medium group transition">
+        {/* Use Next.js Link for navigation */}
+        <Link href="/" className="text-gray-200 hover:text-white relative font-medium group transition">
           Home
           <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
-        </a>
-        <a href="/services" className="text-gray-200 hover:text-white relative font-medium group transition">
+        </Link>
+        <Link href="/services" className="text-gray-200 hover:text-white relative font-medium group transition">
           Services
           <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
-        </a>
-        <a href="/about" className="text-gray-200 hover:text-white relative font-medium group transition">
+        </Link>
+        <Link href="/about" className="text-gray-200 hover:text-white relative font-medium group transition">
           About Us
           <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
-        </a>
-        <a href="/contact" className="text-gray-200 hover:text-white relative font-medium group transition">
+        </Link>
+        <Link href="/contact" className="text-gray-200 hover:text-white relative font-medium group transition">
           Contact
           <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
-        </a>
+        </Link>
       </div>
     </nav>
   );
@@ -80,10 +82,10 @@ export function Footer() {
         <div className="flex flex-col items-start md:items-end gap-4">
           <h3 className="text-lg font-semibold text-white">Quick Links</h3>
           <div className="flex flex-col gap-2">
-            <a href="/about" className="hover:text-teal-400">About Us</a>
-            <a href="/services" className="hover:text-teal-400">Services</a>
-            {/* <a href="/portfolio" className="hover:text-teal-400">Portfolio</a> */}
-            <a href="/contact" className="hover:text-teal-400">Contact</a>
+            <Link href="/about" className="hover:text-teal-400">About Us</Link>
+            <Link href="/services" className="hover:text-teal-400">Services</Link>
+            {/* <Link href="/portfolio" className="hover:text-teal-400">Portfolio</Link> */}
+            <Link href="/contact" className="hover:text-teal-400">Contact</Link>
           </div>
         </div>
       </div>
