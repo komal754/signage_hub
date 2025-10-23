@@ -139,6 +139,37 @@ export default function ContactPage() {
           </div>
         </section>
 
+
+        {/* Location & Directions Section */}
+        <section className="py-16 px-0 sm:px-4">
+          <div className="max-w-3xl mx-auto text-center space-y-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Our Shop Location</h2>
+            <p className="text-gray-700 md:text-lg">Narendra Add Agency,near marble market, opposite to apna bazaar, Bhiwadi, Rajasthan 301019</p>
+            <div className="w-full h-64 rounded-xl overflow-hidden shadow-lg mx-auto">
+              <iframe
+                title="Shop Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.123456789!2d73.123456!3d19.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b123456789ab%3A0x123456789abcdef!2sNarendra%20Art%20%26%20Signage!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=Narendra+Art+%26+Signage+YourTown"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-teal-500 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-teal-600 transition"
+              >
+                Get Directions (Google Maps)
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Modal Confirmation */}
         {showModal && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">

@@ -54,6 +54,9 @@ const collageImages: Record<"signage" | "painting", string[]> = {
     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050077/WhatsApp_Image_2025-10-19_at_10.59.57_PM_cgvyzc.jpg",
     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050076/WhatsApp_Image_2025-10-19_at_11.00.10_PM_1_wjh4uh.jpg",
     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050092/WhatsApp_Image_2025-10-19_at_10.34.29_PM_klvx2x.jpg",
+    "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050078/WhatsApp_Image_2025-10-19_at_11.00.00_PM_pcvxtn.jpg",
+    "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050079/WhatsApp_Image_2025-10-19_at_10.59.47_PM_sk4jdx.jpg",
+    "https://res.cloudinary.com/dnonho9dg/image/upload/v1761229039/WhatsApp_Image_2025-10-18_at_3.49.04_PM_ajkdpr.jpg",
   ],
   painting: [
     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050095/WhatsApp_Image_2025-10-19_at_10.34.25_PM_1_z5cnfm.jpg",
@@ -62,6 +65,8 @@ const collageImages: Record<"signage" | "painting", string[]> = {
     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050090/WhatsApp_Image_2025-10-20_at_12.30.46_AM_tuagnu.jpg",
     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050089/WhatsApp_Image_2025-10-20_at_12.25.38_AM_isdi7k.jpg",
      "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050077/WhatsApp_Image_2025-10-19_at_10.59.56_PM_zrhocp.jpg",
+     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050078/WhatsApp_Image_2025-10-19_at_11.00.07_PM_l98bk9.jpg",
+     "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050076/WhatsApp_Image_2025-10-19_at_10.59.48_PM_bmnp4a.jpg",
   ],
 };
 
@@ -146,8 +151,8 @@ const collageImages: Record<"signage" | "painting", string[]> = {
         </div>
       </nav>
 
-      {/* Hero Section */}
-  <section className="relative w-full h-[90vh] flex items-center justify-center text-center overflow-hidden pt-24 px-0">
+    {/* Hero Section */}
+  <section id="about" className="relative w-full h-[90vh] flex items-center justify-center text-center overflow-hidden pt-24 px-0">
         <Image src="/hero-bg.jpg" alt="Workshop" fill style={{ objectFit: "cover" }} priority />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
         <div className="relative z-10 px-6 max-w-4xl">
@@ -182,8 +187,8 @@ const collageImages: Record<"signage" | "painting", string[]> = {
         </div>
       </section>
 
-      {/* Portfolio Section */}
-  <section className="relative w-full py-20 px-0 bg-gradient-to-b from-gray-50 via-white to-gray-100">
+    {/* Portfolio Section */}
+  <section id="services" className="relative w-full py-20 px-0 bg-gradient-to-b from-gray-50 via-white to-gray-100">
         <div className="mb-12 text-center">
           <h2 className="text-4xl font-bold text-gray-900 tracking-tight">Explore Our Solutions</h2>
           <div className="mt-2 h-1 w-16 bg-teal-500 mx-auto rounded-full"></div>
@@ -391,8 +396,8 @@ const collageImages: Record<"signage" | "painting", string[]> = {
 </section>
 
 
-      {/* CTA Section */}
-      <section className="relative bg-gradient-to-r from-teal-400 to-cyan-400 text-white py-24 text-center px-0 sm:px-10">
+  {/* CTA Section */}
+  <section id="contact" className="relative bg-gradient-to-r from-teal-400 to-cyan-400 text-white py-24 text-center px-0 sm:px-10">
   <h2 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">Your Brand Deserves the Best Signage</h2>
   <a href="/contact" className="bg-white text-teal-500 font-bold px-10 py-4 rounded-full shadow-lg hover:scale-105 transform transition inline-block">Get Started Today</a>
       </section>
@@ -404,26 +409,36 @@ const collageImages: Record<"signage" | "painting", string[]> = {
             <span className="text-2xl font-bold tracking-wide text-white">Signage & Printing <span className="text-teal-400">Solutions</span></span>
             <p className="text-gray-400 max-w-md">Delivering premium signage, printing, and branding solutions for businesses and events.</p>
             <div className="space-y-1 text-gray-200 break-words overflow-x-auto max-w-full">
-<p>
-  Contact: 
-  <a href="tel:9772801733" className="underline text-teal-400 hover:text-teal-300 ml-2">
-    9772801733
-  </a>, 
-  <a href="tel:9772801777" className="underline text-teal-400 hover:text-teal-300 ml-1">
-    9772801777
-  </a>
-</p>
-
-<p>
-  Email: 
-  <a href="mailto:signageworks483@gmail.com" className="underline text-teal-400 hover:text-teal-300 ml-2">
-    signageworks483@gmail.com
-  </a>, 
-  {/* <br /> */}
-  <a href="mailto:info@signworkshop.com" className="underline text-teal-400 hover:text-teal-300 ml-1">
-narendraart.720@gmail.com  </a>
-</p>
-
+              <p>
+                Contact: 
+                <a href="tel:9772801733" className="underline text-teal-400 hover:text-teal-300 ml-2">
+                  9772801733
+                </a>, 
+                <a href="tel:9772801777" className="underline text-teal-400 hover:text-teal-300 ml-1">
+                  9772801777
+                </a>
+              </p>
+              <p>
+                Email: 
+                <a href="mailto:signageworks483@gmail.com" className="underline text-teal-400 hover:text-teal-300 ml-2">
+                  signageworks483@gmail.com
+                </a>, 
+                {/* <br /> */}
+                <a href="mailto:info@signworkshop.com" className="underline text-teal-400 hover:text-teal-300 ml-1">
+                  narendraart.720@gmail.com
+                </a>
+              </p>
+              <p className="mt-2">
+                Location: Narendra Add Agency, near marble market, opposite to apna bazaar, Bhiwadi, Rajasthan 301019
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=Narendra+Add+Agency+Bhiwadi+Rajasthan+301019"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-teal-400 hover:text-teal-300 ml-2"
+                >
+                  Get Directions
+                </a>
+              </p>
             </div>
           </div>
           <div className="flex flex-col items-start md:items-end gap-4">

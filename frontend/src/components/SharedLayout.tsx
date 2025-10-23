@@ -64,6 +64,17 @@ export function Footer() {
               <a href="mailto:signageworks483@gmail.com" className="underline text-teal-400 hover:text-teal-300 ml-2 break-words max-w-full">signageworks483@gmail.com</a>, 
               <a href="mailto:narendraart.720@gmail.com" className="underline text-teal-400 hover:text-teal-300 ml-1 break-words max-w-full">narendraart.720@gmail.com</a>
             </p>
+            <p className="break-words max-w-full overflow-x-auto mt-2">
+              Location: Narendra Art & Signage, Near Main Market, City Center, YourTown, PIN 123456
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=Narendra+Art+%26+Signage+YourTown"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-teal-400 hover:text-teal-300 ml-2 break-words max-w-full"
+              >
+                Get Directions
+              </a>
+            </p>
           </div>
         </div>
         <div className="flex flex-col items-start md:items-end gap-4">
