@@ -19,7 +19,9 @@ type CarouselImage = {
 function useCarouselImages(): CarouselImage[] {
   const [images, setImages] = useState<CarouselImage[]>([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/carousel")
+    // fetch("http://localhost:5000/api/carousel")
+    fetch("https://signage-hub.onrender.com/api/carousel")
+
       .then(res => res.json())
       .then(data => setImages(data))
       .catch(() => setImages([]));

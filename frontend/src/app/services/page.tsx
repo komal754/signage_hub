@@ -169,8 +169,11 @@ export default function ServicesPage() {
     async function fetchServices() {
       try {
         const [categoriesRes, itemsRes, subitemsRes] = await Promise.all([
-          fetch("http://localhost:5000/api/categories"),
-          fetch("http://localhost:5000/api/items"),
+          // fetch("http://localhost:5000/api/categories"),
+          // fetch("http://localhost:5000/api/items"),
+          // fetch("http://localhost:5000/api/subitems")
+          fetch("https://signage-hub.onrender.com/api/categories"),
+          fetch("https://signage-hub.onrender.com/api/items"),
           fetch("http://localhost:5000/api/subitems")
         ]);
         const categories = await categoriesRes.json();
