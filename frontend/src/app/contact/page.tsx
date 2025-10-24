@@ -1,24 +1,40 @@
 "use client";
 
-import { useState } from "react";
-import { CheckCircle2, Phone, Mail, MessageCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import {
+  CheckCircle2,
+  Phone,
+  Mail,
+  MessageCircle,
+  Loader2,
+} from "lucide-react";
 import { Navbar, Footer } from "@/components/SharedLayout";
 import FloatingContactButton from "@/components/FloatingContactButton";
 import { Button } from "@/components/ui/button";
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const validateEmail = (email: string) => /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+  const validateEmail = (email: string) =>
+    /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
   const validatePhone = (phone: string) => /^\+?[0-9]{10,15}$/.test(phone);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!form.name.trim() || !form.phone.trim() || !form.message.trim()) {
       alert("Name, phone, and message are required.");
       return;
@@ -32,28 +48,47 @@ export default function ContactPage() {
       return;
     }
 
+    setLoading(true);
     try {
       const res = await fetch("https://signage-hub.onrender.com/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-
+      const data = await res.json();
       if (res.ok) {
         setForm({ name: "", email: "", phone: "", message: "" });
         setShowModal(true);
-      } else alert("Failed to send inquiry.");
+      } else {
+        alert("Failed to send inquiry.");
+      }
     } catch {
       alert("Error sending inquiry. Check your connection.");
     }
+    setLoading(false);
   };
+
+  // Auto-close modal after 3 seconds
+  useEffect(() => {
+    if (showModal) {
+      const timer = setTimeout(() => setShowModal(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showModal]);
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen font-sans w-full px-4 sm:px-6 md:px-10 pt-28 sm:pt-32 bg-gray-50">
-        {/* Floating Contact Button */}
+      <main className="min-h-screen font-sans w-full px-4 sm:px-6 md:px-10 pt-28 sm:pt-32 bg-gray-50 relative">
         <FloatingContactButton />
+
+        {/* Loading Overlay */}
+        {loading && (
+          <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-50 flex flex-col items-center justify-center text-white animate-fadeIn">
+            <Loader2 className="animate-spin mb-4" size={48} />
+            <p className="text-lg font-semibold">Sending your inquiry...</p>
+          </div>
+        )}
 
         {/* ---------- Hero Section ---------- */}
         <section className="pb-20">
@@ -62,7 +97,8 @@ export default function ContactPage() {
               Contact <span className="text-teal-500">Us</span>
             </h1>
             <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
-              Fill out the form below or reach out directly. Our team will respond promptly.
+              Fill out the form below or reach out directly. Our team will
+              respond promptly.
             </p>
 
             {/* Contact Buttons */}
@@ -94,7 +130,7 @@ export default function ContactPage() {
           <div className="mt-12 max-w-3xl mx-auto px-2 sm:px-4">
             <form
               onSubmit={handleSubmit}
-              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 flex flex-col gap-5 border border-gray-200"
+              className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 flex flex-col gap-5 border border-gray-200 transition duration-300 hover:shadow-xl"
             >
               <input
                 type="text"
@@ -129,10 +165,16 @@ export default function ContactPage() {
                 value={form.message}
                 onChange={handleChange}
                 required
-                className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400 min-h-[140px] text-sm sm:text-base"
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400 min-h-[140px] text-sm sm:text-base resize-none"
               />
 
-              <Button className="bg-teal-500 text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-teal-600 hover:scale-105 transition w-full sm:w-auto mx-auto">
+              <Button
+                className="bg-teal-500 text-white font-bold px-8 py-3 rounded-full shadow-md hover:bg-teal-600 hover:scale-105 transition w-full sm:w-auto mx-auto"
+                disabled={loading}
+              >
+                {loading ? (
+                  <Loader2 className="animate-spin mr-2 inline" size={20} />
+                ) : null}
                 Send Inquiry
               </Button>
             </form>
@@ -142,9 +184,12 @@ export default function ContactPage() {
         {/* ---------- Location Section ---------- */}
         <section className="py-16 px-2 sm:px-4 bg-white rounded-t-3xl shadow-inner">
           <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">Our Shop Location</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+              Our Shop Location
+            </h2>
             <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
-              Narendra Add Agency, near Marble Market, opposite Apna Bazaar, Bhiwadi, Rajasthan 301019
+              Narendra Add Agency, near Marble Market, opposite Apna Bazaar,
+              Bhiwadi, Rajasthan 301019
             </p>
             <div className="w-full h-60 sm:h-72 md:h-80 rounded-xl overflow-hidden shadow-lg mx-auto">
               <iframe
@@ -171,16 +216,24 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* ---------- Modal ---------- */}
+        {/* ---------- Confirmation Modal ---------- */}
         {showModal && (
-          <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-            <div className="bg-white p-8 rounded-2xl shadow-xl text-center max-w-xs animate-fadeIn border border-teal-400">
-              <CheckCircle2 className="mx-auto text-teal-500 w-12 h-12 mb-4" />
-              <h2 className="text-xl font-bold mb-2 text-gray-900">Thank You!</h2>
-              <p className="text-gray-700">Your inquiry has been submitted successfully.</p>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fadeIn">
+            <div className="relative bg-white/90 backdrop-blur-md border border-teal-400 rounded-3xl shadow-2xl p-8 max-w-sm w-full text-center transform scale-100 animate-slideUp">
+              <CheckCircle2
+                className="mx-auto mb-4 text-teal-500"
+                size={56}
+              />
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Inquiry Submitted!
+              </h2>
+              <p className="text-gray-700 mb-6 leading-relaxed">
+                Thank you for reaching out. Your inquiry has been received and
+                our team will contact you soon.
+              </p>
               <button
+                className="bg-teal-500 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-teal-600 transition"
                 onClick={() => setShowModal(false)}
-                className="mt-4 bg-teal-500 text-white px-6 py-2 rounded-full shadow-lg hover:bg-teal-600 hover:scale-105 transition"
               >
                 Close
               </button>
@@ -188,19 +241,39 @@ export default function ContactPage() {
           </div>
         )}
 
+        {/* Animations */}
         <style jsx>{`
           @keyframes fadeIn {
             from {
               opacity: 0;
-              transform: translateY(-10px);
             }
             to {
               opacity: 1;
-              transform: translateY(0);
+            }
+          }
+          @keyframes fadeOut {
+            from {
+              opacity: 1;
+            }
+            to {
+              opacity: 0;
+            }
+          }
+          @keyframes slideUp {
+            from {
+              opacity: 0;
+              transform: translateY(10px) scale(0.98);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0) scale(1);
             }
           }
           .animate-fadeIn {
-            animation: fadeIn 0.3s ease-out;
+            animation: fadeIn 0.3s ease-out forwards;
+          }
+          .animate-slideUp {
+            animation: slideUp 0.35s ease-out forwards;
           }
         `}</style>
       </main>

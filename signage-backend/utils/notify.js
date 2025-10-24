@@ -17,7 +17,7 @@ const notifyAdmin = async (contact) => {
       subject: 'New Contact Submission',
       text: `New contact:\nName: ${contact.name}\nEmail: ${contact.email}\nPhone: ${contact.phone}\nMessage: ${contact.message}`,
     });
-    console.log('Admin notification email sent successfully');
+      // console.log('Admin notification email sent successfully');
   } catch (err) {
     console.error('Error sending admin notification email:', err);
     throw err;
@@ -26,17 +26,25 @@ const notifyAdmin = async (contact) => {
 
 const notifyCustomer = async (contact, template) => {
   try {
-    await transporter.sendMail({
+    const info = await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: contact.email,
       subject: 'Thank you for your inquiry',
       text: template,
     });
-    console.log('Customer notification email sent successfully');
+      // console.log('Customer notification email sent successfully:', info.response);
   } catch (err) {
-    console.error('Error sending customer notification email:', err);
+    console.error('Error sending customer notification email:', {
+      message: err.message,
+      stack: err.stack,
+      response: err.response,
+      code: err.code,
+      ...err
+    });
     throw err;
   }
+  // Log customer email status for local testing
+  // console.log('Customer email status:', customerEmailStatus, customerEmailError);
 };
 
 module.exports = { notifyAdmin, notifyCustomer };

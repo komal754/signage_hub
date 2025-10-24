@@ -436,7 +436,7 @@ const collageImages: Record<"signage" | "painting", string[]> = {
                   9772801733
                 </a>, 
                 <a href="tel:9772801777" className="underline text-teal-400 hover:text-teal-300 ml-1">
-                  9772801777
+                  9772801726
                 </a>
               </p>
               <p>

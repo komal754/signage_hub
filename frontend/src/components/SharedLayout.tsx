@@ -59,7 +59,7 @@ export function Footer() {
             <p className="break-words max-w-full overflow-x-auto">
                   Contact: 
                   <Link href="tel:9772801733" className="underline text-teal-400 hover:text-teal-300 ml-2 break-words max-w-full">9772801733</Link>, 
-                  <Link href="tel:9772801777" className="underline text-teal-400 hover:text-teal-300 ml-1 break-words max-w-full">9772801777</Link>
+                  <Link href="tel:9772801777" className="underline text-teal-400 hover:text-teal-300 ml-1 break-words max-w-full">9772801726</Link>
             </p>
             <p className="break-words max-w-full overflow-x-auto">
                   Email: 
@@ -67,7 +67,7 @@ export function Footer() {
                   <Link href="mailto:narendraart.720@gmail.com" className="underline text-teal-400 hover:text-teal-300 ml-1 break-words max-w-full">narendraart.720@gmail.com</Link>
             </p>
             <p className="break-words max-w-full overflow-x-auto mt-2">
-                  Location: Narendra Art & Signage, Near Main Market, City Center, YourTown, PIN 123456
+                  Location: Narendra Add Agency, near marble market, opposite to apna bazaar, Bhiwadi, Rajasthan 301019
                   <Link
                     href="https://www.google.com/maps/dir/?api=1&destination=Narendra+Art+%26+Signage+YourTown"
                     target="_blank"
