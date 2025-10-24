@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 
 export function Navbar() {
@@ -8,7 +7,7 @@ export function Navbar() {
   return (
     <nav className={`w-full px-8 py-4 flex items-center justify-between fixed top-0 z-50 bg-black/40 backdrop-blur-md shadow-lg transition-all duration-500`}>
       <div className="flex items-center gap-4">
-  <Image src="/logo.png" alt="Logo" width={80} height={80} className="rounded-md shadow-md" />
+  <img src="/logo.png" alt="Logo" width={80} height={80} className="rounded-md shadow-md" />
         <span className="text-white text-2xl font-extrabold tracking-wide">
           Signage & Printing Workshop
         </span>
