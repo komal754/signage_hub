@@ -11,19 +11,20 @@ import FloatingContactButton from "@/components/FloatingContactButton";
 export default function AboutUsPage() {
   const uniqueApproachImages = [
     {
-      src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050078/WhatsApp_Image_2025-10-19_at_11.00.06_PM_1_nwocxo.jpg",
-      alt: "Traditional Advertisement",
-    },
-    {
       src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050111/20251020_193833_caxi72.jpg",
       alt: "Modern Digital Signage",
     },
     {
-      src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050095/WhatsApp_Image_2025-10-19_at_10.34.25_PM_1_z5cnfm.jpg",
+      src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761304667/WhatsApp_Image_2025-10-24_at_2.34.58_AM_uaqxsf.jpg",
+      alt: "Traditional Advertisement",
+    },
+
+    {
+      src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050089/WhatsApp_Image_2025-10-20_at_12.25.38_AM_isdi7k.jpg",
       alt: "Traditional Advertisement",
     },
     {
-      src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050095/WhatsApp_Image_2025-10-19_at_10.34.26_PM_1_bka4tc.jpg",
+      src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050079/WhatsApp_Image_2025-10-19_at_10.59.47_PM_sk4jdx.jpg",
       alt: "Modern Digital Signage",
     }
   ];
