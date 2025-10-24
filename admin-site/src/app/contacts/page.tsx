@@ -56,7 +56,7 @@ export default function ContactsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+      <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8 admin-responsive">
       {/* Header */}
       <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <h1 className="text-3xl font-extrabold text-gray-800">📩 Contact Submissions</h1>

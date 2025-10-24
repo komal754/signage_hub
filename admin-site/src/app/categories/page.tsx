@@ -65,7 +65,7 @@ export default function CategoriesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+  <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-8 admin-responsive">
       <div className="max-w-3xl mx-auto space-y-8">
         {/* Title */}
         <h1 className="text-3xl font-extrabold text-gray-800">📂 Manage Categories</h1>

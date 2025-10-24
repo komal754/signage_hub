@@ -3,7 +3,7 @@ import { Layers, Package } from "lucide-react"; // icons
 
 export default function AdminDashboard() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-10">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-10 admin-responsive">
       {/* Header */}
       <div className="mb-10 text-center">
         <h1 className="text-4xl font-extrabold text-gray-800">⚙️ Admin Dashboard</h1>

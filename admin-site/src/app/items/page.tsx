@@ -455,7 +455,7 @@ const AdminPage: React.FC = () => {
 
   // Tab UI
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-10">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-10 admin-responsive">
       <div className="max-w-6xl mx-auto space-y-10">
         <h1 className="text-3xl font-extrabold text-gray-800">Admin Panel</h1>
         <div className="flex gap-4 mb-6">

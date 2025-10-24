@@ -116,7 +116,7 @@ export default function SubitemsPage() {
   };
 
   return (
-    <main className="p-8 bg-gray-50 min-h-screen">
+  <main className="p-8 bg-gray-50 min-h-screen admin-responsive">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Manage Subitems</h1>
 
       {/* Toast */}
