@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import ClientAdminLayoutWrapper from "../components/ClientAdminLayoutWrapper";
 import "./globals.css";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,13 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* AdminLayout wraps all pages globally */}
-        {/**/}
-        {typeof window === 'undefined' ? (
-          children
-        ) : (
-          require("../components/AdminLayout").default({ children })
-        )}
+  {/* Wrap all pages in AdminLayout client-side */}
+  <ClientAdminLayoutWrapper>{children}</ClientAdminLayoutWrapper>
       </body>
     </html>
   );

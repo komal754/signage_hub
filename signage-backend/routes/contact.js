@@ -41,4 +41,15 @@ router.post('/', async (req, res) => {
   }
 });
 
+
+// Delete contact submission
+router.delete('/:id', async (req, res) => {
+  try {
+    await Contact.findByIdAndDelete(req.params.id);
+    res.status(204).end();
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete contact.' });
+  }
+});
+
 module.exports = router;

@@ -17,7 +17,7 @@ export default function ContactsPage() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/contact")
+    fetch("https://signage-hub.onrender.com/api/contact")
       .then(res => res.json())
       .then(data => {
         setContacts(data);
@@ -30,6 +30,19 @@ export default function ContactsPage() {
     (c.email && c.email.toLowerCase().includes(search.toLowerCase())) ||
     (c.phone && c.phone.includes(search))
   );
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this contact submission?')) return;
+    try {
+      const res = await fetch(`https://signage-hub.onrender.com/api/contact/${id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete contact');
+      setContacts(contacts.filter(c => c._id !== id));
+    } catch (err) {
+      alert('Error deleting contact.');
+    }
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -86,10 +99,16 @@ export default function ContactsPage() {
                   <p className="text-gray-700 text-sm mt-3 italic">“{contact.message}”</p>
                 </div>
 
-                {/* Date */}
-                <span className="text-gray-400 text-xs whitespace-nowrap">
-                  {formatDate(contact.date)}
-                </span>
+                {/* Date & Delete Button */}
+                <div className="flex flex-col items-end gap-2">
+                  <span className="text-gray-400 text-xs whitespace-nowrap">{formatDate(contact.date)}</span>
+                  {/* <button
+                    onClick={() => handleDelete(contact._id)}
+                    className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow hover:bg-red-600 transition"
+                  >
+                    Delete
+                  </button> */}
+                </div>
               </div>
             </li>
           ))}

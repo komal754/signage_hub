@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
+import Image from "next/image";
+
 // Data types
 interface Category {
   _id: string;
@@ -28,8 +30,15 @@ type Tab = "categories" | "items" | "subitems";
 // Subitem CRUD
 // Modern SubitemAdmin with grid, modal, toasts
 function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: SubItem[], setSubitems: (s: SubItem[]) => void, items: Item[], categories: Category[] }) {
-  const emptyForm = { name: "", desc: "", image: "", item: "", category: "" };
-  const [form, setForm] = React.useState<any>(emptyForm);
+  interface SubitemForm {
+    name: string;
+    desc: string;
+    image: string;
+    item: string;
+    category: string;
+  }
+  const emptyForm: SubitemForm = { name: "", desc: "", image: "", item: "", category: "" };
+  const [form, setForm] = React.useState<SubitemForm>(emptyForm);
   const [editingId, setEditingId] = React.useState<string | null>(null);
   const [showEditModal, setShowEditModal] = React.useState(false);
   const [toast, setToast] = React.useState<{ type: "success" | "error"; message: string } | null>(null);
@@ -41,7 +50,9 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
   const fetchSubitems = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/subitems");
+      // const res = await fetch("http://localhost:5000/api/subitems");
+      const res = await fetch("https://signage-hub.onrender.com/api/subitems");
+      
       setSubitems(await res.json());
     } catch {
       showToast("error", "Failed to load subitems.");
@@ -61,9 +72,13 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
     if (name === "item") {
       const selectedItem = items.find((it) => it._id === value);
       if (selectedItem) {
-        const catId = typeof selectedItem.category === "object" && selectedItem.category !== null
-          ? (selectedItem.category as any)._id
-          : selectedItem.category;
+        let catId: string = "";
+        if (typeof selectedItem.category === "object" && selectedItem.category !== null) {
+          const catObj = selectedItem.category as Category;
+          catId = catObj._id;
+        } else if (typeof selectedItem.category === "string") {
+          catId = selectedItem.category;
+        }
         setForm({ ...form, item: value, category: catId || "" });
         return;
       }
@@ -75,8 +90,8 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
     e.preventDefault();
     try {
       const url = editingId
-        ? `http://localhost:5000/api/subitems/${editingId}`
-        : "http://localhost:5000/api/subitems";
+        ? `https://signage-hub.onrender.com/api/subitems/${editingId}`
+        : "https://signage-hub.onrender.com/api/subitems";
       const method = editingId ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -97,12 +112,26 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
   };
 
   const handleEdit = (sub: SubItem) => {
+    let itemId: string = "";
+    if (typeof sub.item === "object" && sub.item !== null) {
+      const itemObj = sub.item as Item;
+      itemId = itemObj._id;
+    } else if (typeof sub.item === "string") {
+      itemId = sub.item;
+    }
+    let categoryId: string = "";
+    if (typeof sub.category === "object" && sub.category !== null) {
+      const catObj = sub.category as Category;
+      categoryId = catObj._id;
+    } else if (typeof sub.category === "string") {
+      categoryId = sub.category;
+    }
     setForm({
       name: sub.name,
       desc: sub.desc,
       image: sub.image || "",
-      item: typeof sub.item === "object" ? (sub.item as any)._id : sub.item,
-      category: typeof sub.category === "object" ? (sub.category as any)._id : sub.category,
+      item: itemId,
+      category: categoryId,
     });
     setEditingId(sub._id!);
     setShowEditModal(true);
@@ -111,7 +140,7 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
   const handleDelete = async () => {
     if (!confirmDeleteId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/subitems/${confirmDeleteId}`, { method: "DELETE" });
+      const res = await fetch(`https://signage-hub.onrender.com/api/subitems/${confirmDeleteId}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
       showToast("success", "Subitem deleted successfully!");
       fetchSubitems();
@@ -312,8 +341,18 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {subitems
             .filter(sub => {
-              const catId = typeof sub.category === "object" && sub.category ? (sub.category as any)._id : sub.category;
-              const itemId = typeof sub.item === "object" && sub.item ? (sub.item as any)._id : sub.item;
+              let catId: string = "";
+              if (typeof sub.category === "object" && sub.category) {
+                catId = (sub.category as Category)._id;
+              } else if (typeof sub.category === "string") {
+                catId = sub.category;
+              }
+              let itemId: string = "";
+              if (typeof sub.item === "object" && sub.item) {
+                itemId = (sub.item as Item)._id;
+              } else if (typeof sub.item === "string") {
+                itemId = sub.item;
+              }
               const catMatch = !filterCategory || catId === filterCategory;
               const itemMatch = !filterItem || itemId === filterItem;
               return catMatch && itemMatch;
@@ -323,20 +362,24 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
                 key={sub._id}
                 className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1"
               >
-                <img
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <Image
                   src={sub.image || "/placeholder.png"}
                   alt={sub.name}
+                  width={400}
+                  height={192}
                   className="w-full h-48 object-contain mb-4 rounded"
+                  unoptimized
                 />
                 <h3 className="text-lg font-semibold mb-1">{sub.name}</h3>
                 <p className="text-gray-600 mb-2">{sub.desc}</p>
                 <p className="text-sm text-gray-500">
                   Item: {typeof sub.item === "object" && sub.item
-                    ? (sub.item as any).name
+                    ? (sub.item as Item).name
                     : (items.find(i => i._id === sub.item)?.name ?? sub.item)}
                 </p>
                 <p className="text-sm text-gray-500 mb-4">
-                  Category: {typeof sub.category === "object" && sub.category ? (sub.category as any).name : categories.find(c => c._id === sub.category)?.name || sub.category}
+                  Category: {typeof sub.category === "object" && sub.category ? (sub.category as Category).name : categories.find(c => c._id === sub.category)?.name || sub.category}
                 </p>
                 <div className="flex gap-2">
                   <button
@@ -398,9 +441,9 @@ const AdminPage: React.FC = () => {
     async function fetchAll() {
       setLoading(true);
       const [catRes, itemRes, subRes] = await Promise.all([
-  fetch("http://localhost:5000/api/categories"),
-  fetch("http://localhost:5000/api/items"),
-  fetch("http://localhost:5000/api/subitems")
+  fetch("https://signage-hub.onrender.com/api/categories"),
+  fetch("https://signage-hub.onrender.com/api/items"),
+  fetch("https://signage-hub.onrender.com/api/subitems")
       ]);
       setCategories(await catRes.json());
       setItems(await itemRes.json());
@@ -435,8 +478,12 @@ const AdminPage: React.FC = () => {
 
 // Category CRUD
 function CategoryAdmin({ categories, setCategories }: { categories: Category[], setCategories: (c: Category[]) => void }) {
-  const emptyForm = { name: "", description: "" };
-  const [form, setForm] = React.useState<any>(emptyForm);
+  interface CategoryForm {
+    name: string;
+    description: string;
+  }
+  const emptyForm: CategoryForm = { name: "", description: "" };
+  const [form, setForm] = React.useState<CategoryForm>(emptyForm);
   const [editingId, setEditingId] = React.useState<string | null>(null);
   const [toast, setToast] = React.useState<{ type: "success" | "error"; message: string } | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = React.useState<string | null>(null);
@@ -445,7 +492,7 @@ function CategoryAdmin({ categories, setCategories }: { categories: Category[], 
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/categories");
+      const res = await fetch("https://signage-hub.onrender.com/api/categories");
       setCategories(await res.json());
     } catch {
       showToast("error", "Failed to load categories.");
@@ -467,8 +514,8 @@ function CategoryAdmin({ categories, setCategories }: { categories: Category[], 
     e.preventDefault();
     try {
       const url = editingId
-        ? `http://localhost:5000/api/categories/${editingId}`
-        : "http://localhost:5000/api/categories";
+        ? `https://signage-hub.onrender.com/api/categories/${editingId}`
+        : "https://signage-hub.onrender.com/api/categories";
       const method = editingId ? "PUT" : "POST";
       const res = await fetch(url, {
         method,
@@ -493,7 +540,7 @@ function CategoryAdmin({ categories, setCategories }: { categories: Category[], 
   const handleDelete = async () => {
     if (!confirmDeleteId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/categories/${confirmDeleteId}`, { method: "DELETE" });
+      const res = await fetch(`https://signage-hub.onrender.com/api/categories/${confirmDeleteId}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
       showToast("success", "Category deleted successfully!");
       fetchCategories();
@@ -619,8 +666,14 @@ function CategoryAdmin({ categories, setCategories }: { categories: Category[], 
 
 // Item CRUD
 function ItemAdmin({ items, setItems, categories }: { items: Item[], setItems: (i: Item[]) => void, categories: Category[] }) {
-  const emptyForm = { name: "", description: "", category: "", bestseller: false };
-  const [form, setForm] = React.useState<any>(emptyForm);
+  interface ItemForm {
+    name: string;
+    description: string;
+    category: string;
+    bestseller: boolean;
+  }
+  const emptyForm: ItemForm = { name: "", description: "", category: "", bestseller: false };
+  const [form, setForm] = React.useState<ItemForm>(emptyForm);
   const [editingId, setEditingId] = React.useState<string | null>(null);
   const [toast, setToast] = React.useState<{ type: "success" | "error"; message: string } | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = React.useState<string | null>(null);
@@ -629,7 +682,7 @@ function ItemAdmin({ items, setItems, categories }: { items: Item[], setItems: (
   const fetchItems = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/items");
+      const res = await fetch("https://signage-hub.onrender.com/api/items");
       setItems(await res.json());
     } catch {
       showToast("error", "Failed to load items.");
@@ -645,7 +698,7 @@ function ItemAdmin({ items, setItems, categories }: { items: Item[], setItems: (
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    let fieldValue: any = value;
+  let fieldValue: string | boolean = value;
     if (type === "checkbox") {
       fieldValue = (e.target as HTMLInputElement).checked;
     }
@@ -656,8 +709,8 @@ function ItemAdmin({ items, setItems, categories }: { items: Item[], setItems: (
     e.preventDefault();
     try {
       const url = editingId
-        ? `http://localhost:5000/api/items/${editingId}`
-        : "http://localhost:5000/api/items";
+        ? `https://signage-hub.onrender.com/api/items/${editingId}`
+        : "https://signage-hub.onrender.com/api/items";
       const method = editingId ? "PUT" : "POST";
       const res = await fetch(url, {
         method,
@@ -675,10 +728,17 @@ function ItemAdmin({ items, setItems, categories }: { items: Item[], setItems: (
   };
 
   const handleEdit = (item: Item) => {
+    let categoryId: string = "";
+    if (typeof item.category === "object" && item.category !== null) {
+      const catObj = item.category as Category;
+      categoryId = catObj._id;
+    } else if (typeof item.category === "string") {
+      categoryId = item.category;
+    }
     setForm({
       name: item.name,
       description: item.description,
-      category: typeof item.category === "object" ? (item.category as any)._id : item.category,
+      category: categoryId,
       bestseller: !!item.bestseller,
     });
     setEditingId(item._id);
@@ -687,7 +747,7 @@ function ItemAdmin({ items, setItems, categories }: { items: Item[], setItems: (
   const handleDelete = async () => {
     if (!confirmDeleteId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/items/${confirmDeleteId}`, { method: "DELETE" });
+      const res = await fetch(`https://signage-hub.onrender.com/api/items/${confirmDeleteId}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
       showToast("success", "Item deleted successfully!");
       fetchItems();
@@ -779,7 +839,7 @@ function ItemAdmin({ items, setItems, categories }: { items: Item[], setItems: (
               <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
               <p className="text-gray-600 mb-2">{item.description}</p>
               <p className="text-sm text-gray-500 mb-1">
-                Category: {typeof item.category === "object" && item.category ? (item.category as any).name : categories.find(c => c._id === item.category)?.name || item.category}
+                Category: {typeof item.category === "object" && item.category ? (item.category as Category).name : categories.find(c => c._id === item.category)?.name || item.category}
               </p>
               <p className="text-sm text-gray-500 mb-2">
                 Bestseller: {item.bestseller ? "Yes" : "No"}

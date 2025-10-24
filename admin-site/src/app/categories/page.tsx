@@ -13,7 +13,7 @@ export default function CategoriesPage() {
     async function fetchCategories() {
       setLoading(true);
       try {
-  const res = await fetch("http://localhost:5000/api/categories");
+  const res = await fetch("https://signage-hub.onrender.com/api/categories");
         const data = await res.json();
         setCategories(data);
       } catch (err) {
@@ -29,7 +29,7 @@ export default function CategoriesPage() {
     if (!newCategory.trim()) return;
     setAdding(true);
     try {
-  const res = await fetch("http://localhost:5000/api/categories", {
+  const res = await fetch("https://signage-hub.onrender.com/api/categories", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: newCategory.trim() }),
@@ -50,7 +50,7 @@ export default function CategoriesPage() {
     if (!confirm("Are you sure you want to delete this category?")) return;
     setDeleting(id);
     try {
-  const res = await fetch("http://localhost:5000/api/categories", {
+  const res = await fetch("https://signage-hub.onrender.com/api/categories", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),

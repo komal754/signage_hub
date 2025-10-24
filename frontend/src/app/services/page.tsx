@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { Navbar, Footer } from "@/components/SharedLayout";
+import Link from "next/link";
 import FloatingContactButton from "@/components/FloatingContactButton";
 
 interface SubItem {
@@ -262,9 +263,11 @@ export default function ServicesPage() {
                     <h3 className="text-2xl font-semibold mb-2 text-gray-900 group-hover:text-teal-500 transition-colors tracking-tight">{service.title}</h3>
                     <p className="text-gray-500 text-sm md:text-base leading-relaxed mb-4">{service.desc}</p>
                     {service.subItems && service.subItems.length > 0 && <SubItemSlider subItems={service.subItems} />}
-                    <Button className="mt-4 bg-gradient-to-r from-teal-400 to-cyan-400 text-white px-8 py-3 font-bold shadow-lg rounded-full transition-all hover:scale-105">
-                      Contact / Inquiry
-                    </Button>
+                    <Link href="/contact">
+                      <Button className="mt-4 bg-gradient-to-r from-teal-400 to-cyan-400 text-white px-8 py-3 font-bold shadow-lg rounded-full transition-all hover:scale-105">
+                        Contact / Inquiry
+                      </Button>
+                    </Link>
                   </motion.div>
                 ))}
               </div>

@@ -8,8 +8,18 @@ export async function GET() {
     await dbConnect();
     const images = await CarouselItem.find().sort({ createdAt: -1 });
     return NextResponse.json(images);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message, stack: e.stack }, { status: 500 });
+  } catch (e: unknown) {
+    let errorMsg = 'Unknown error';
+    let errorStack = '';
+    if (typeof e === 'object' && e !== null) {
+      if ('message' in e && typeof (e as { message?: unknown }).message === 'string') {
+        errorMsg = (e as { message: string }).message;
+      }
+      if ('stack' in e && typeof (e as { stack?: unknown }).stack === 'string') {
+        errorStack = (e as { stack: string }).stack;
+      }
+    }
+    return NextResponse.json({ error: errorMsg, stack: errorStack }, { status: 500 });
   }
 }
 
@@ -19,8 +29,18 @@ export async function POST(req: Request) {
     const { url, title } = await req.json();
     const image = await CarouselItem.create({ url, title });
     return NextResponse.json(image);
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message, stack: e.stack }, { status: 500 });
+  } catch (e: unknown) {
+    let errorMsg = 'Unknown error';
+    let errorStack = '';
+    if (typeof e === 'object' && e !== null) {
+      if ('message' in e && typeof (e as { message?: unknown }).message === 'string') {
+        errorMsg = (e as { message: string }).message;
+      }
+      if ('stack' in e && typeof (e as { stack?: unknown }).stack === 'string') {
+        errorStack = (e as { stack: string }).stack;
+      }
+    }
+    return NextResponse.json({ error: errorMsg, stack: errorStack }, { status: 500 });
   }
 }
 
@@ -32,7 +52,17 @@ export async function DELETE(req: Request) {
     if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
     await CarouselItem.findByIdAndDelete(id);
     return NextResponse.json({ success: true });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message, stack: e.stack }, { status: 500 });
+  } catch (e: unknown) {
+    let errorMsg = 'Unknown error';
+    let errorStack = '';
+    if (typeof e === 'object' && e !== null) {
+      if ('message' in e && typeof (e as { message?: unknown }).message === 'string') {
+        errorMsg = (e as { message: string }).message;
+      }
+      if ('stack' in e && typeof (e as { stack?: unknown }).stack === 'string') {
+        errorStack = (e as { stack: string }).stack;
+      }
+    }
+    return NextResponse.json({ error: errorMsg, stack: errorStack }, { status: 500 });
   }
 }

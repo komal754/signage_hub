@@ -1,5 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
+import Image from "next/image";
 
 interface SubItem {
   _id?: string;
@@ -26,10 +28,10 @@ export default function SubitemsPage() {
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  const fetchSubitems = async () => {
+  const fetchSubitems = React.useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/subitems");
+      const res = await fetch("https://signage-hub.onrender.com/api/subitems");
       const data = await res.json();
       setSubitems(data);
     } catch {
@@ -37,11 +39,11 @@ export default function SubitemsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchSubitems();
-  }, []);
+  }, [fetchSubitems]);
 
   const showToast = (type: "success" | "error", message: string) => {
     setToast({ type, message });
@@ -56,8 +58,8 @@ export default function SubitemsPage() {
     e.preventDefault();
     try {
       const url = editingId
-        ? `http://localhost:5000/api/subitems/${editingId}`
-        : "http://localhost:5000/api/subitems";
+        ? `https://signage-hub.onrender.com/api/subitems/${editingId}`
+        : "https://signage-hub.onrender.com/api/subitems";
       const method = editingId ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -77,12 +79,24 @@ export default function SubitemsPage() {
   };
 
   const handleEdit = (sub: SubItem) => {
+    let itemId: string = "";
+    if (typeof sub.item === "object" && sub.item !== null) {
+      itemId = (sub.item as { _id: string })._id;
+    } else if (typeof sub.item === "string") {
+      itemId = sub.item;
+    }
+    let categoryId: string = "";
+    if (typeof sub.category === "object" && sub.category !== null) {
+      categoryId = (sub.category as { _id: string })._id;
+    } else if (typeof sub.category === "string") {
+      categoryId = sub.category;
+    }
     setForm({
       name: sub.name,
       desc: sub.desc,
       image: sub.image || "",
-      item: typeof sub.item === "object" ? (sub.item as any)._id : sub.item,
-      category: typeof sub.category === "object" ? (sub.category as any)._id : sub.category,
+      item: itemId,
+      category: categoryId,
     });
     setEditingId(sub._id!);
   };
@@ -90,7 +104,7 @@ export default function SubitemsPage() {
   const handleDelete = async () => {
     if (!confirmDeleteId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/subitems/${confirmDeleteId}`, { method: "DELETE" });
+      const res = await fetch(`https://signage-hub.onrender.com/api/subitems/${confirmDeleteId}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
       showToast("success", "Subitem deleted successfully!");
       fetchSubitems();
@@ -190,18 +204,21 @@ export default function SubitemsPage() {
               key={sub._id}
               className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1"
             >
-              <img
+              <Image
                 src={sub.image || "/placeholder.png"}
                 alt={sub.name}
+                width={400}
+                height={192}
                 className="w-full h-48 object-contain mb-4 rounded"
+                unoptimized
               />
               <h3 className="text-lg font-semibold mb-1">{sub.name}</h3>
               <p className="text-gray-600 mb-2">{sub.desc}</p>
               <p className="text-sm text-gray-500">
-                Item: {typeof sub.item === "object" ? (sub.item as any).name : sub.item}
+                Item: {typeof sub.item === "object" && sub.item !== null ? (sub.item as { name?: string }).name ?? "" : sub.item}
               </p>
               <p className="text-sm text-gray-500 mb-4">
-                Category: {typeof sub.category === "object" ? (sub.category as any).name : sub.category}
+                Category: {typeof sub.category === "object" && sub.category !== null ? (sub.category as { name?: string }).name ?? "" : sub.category}
               </p>
               <div className="flex gap-2">
                 <button

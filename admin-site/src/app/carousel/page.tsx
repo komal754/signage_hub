@@ -1,14 +1,23 @@
 "use client";
 
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-  import { useEffect } from "react";
+import Image from "next/image";
+
+interface CarouselImage {
+  _id: string;
+  url: string;
+  title?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
 export default function CarouselAdmin() {
-  const API_BASE = "http://localhost:5000/api/carousel";
+  const API_BASE = "https://signage-hub.onrender.com/api/carousel";
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<CarouselImage[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -20,7 +29,7 @@ export default function CarouselAdmin() {
       const res = await fetch(API_BASE);
       const data = await res.json();
       setImages(data);
-    } catch (e) {
+    } catch {
       setError("Failed to fetch images");
     }
     setLoading(false);
@@ -44,7 +53,7 @@ export default function CarouselAdmin() {
       setUrl("");
       setTitle("");
       fetchImages();
-    } catch (e) {
+    } catch {
       setError("Failed to add image");
     }
     setLoading(false);
@@ -55,7 +64,7 @@ export default function CarouselAdmin() {
   const [editUrl, setEditUrl] = useState("");
   const [editTitle, setEditTitle] = useState("");
 
-  const handleEdit = (img: any) => {
+  const handleEdit = (img: CarouselImage) => {
     setEditId(img._id);
     setEditUrl(img.url);
     setEditTitle(img.title || "");
@@ -80,7 +89,7 @@ export default function CarouselAdmin() {
       setEditUrl("");
       setEditTitle("");
       fetchImages();
-    } catch (e) {
+    } catch {
       setError("Failed to update image");
     }
     setLoading(false);
@@ -94,7 +103,7 @@ export default function CarouselAdmin() {
       const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Failed to delete image");
       fetchImages();
-    } catch (e) {
+    } catch {
       setError("Failed to delete image");
     }
     setLoading(false);
@@ -155,7 +164,14 @@ export default function CarouselAdmin() {
         {Array.isArray(images) ? (
           images.map(img => (
             <div key={img._id} className="border rounded-lg p-4 flex flex-col items-center">
-              <img src={img.url} alt={img.title || "Carousel Image"} className="w-full h-40 object-cover rounded mb-2" />
+              <Image
+                src={img.url}
+                alt={img.title || "Carousel Image"}
+                width={400}
+                height={160}
+                className="w-full h-40 object-cover rounded mb-2"
+                unoptimized
+              />
               <div className="font-semibold text-gray-700 mb-2">{img.title || <span className="italic text-gray-400">No title</span>}</div>
               <Button onClick={() => handleEdit(img)} className="bg-blue-500 text-white w-full mb-2">Edit</Button>
               <Button onClick={() => handleDelete(img._id)} className="bg-red-500 text-white w-full">Delete</Button>
@@ -163,7 +179,7 @@ export default function CarouselAdmin() {
           ))
         ) : (
           <div className="text-red-500">
-            {images?.error ? `Error: ${images.error}` : "Failed to load images"}
+            Failed to load images
           </div>
         )}
       </div>

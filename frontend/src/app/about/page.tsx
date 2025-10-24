@@ -18,7 +18,6 @@ export default function AboutUsPage() {
       src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761304667/WhatsApp_Image_2025-10-24_at_2.34.58_AM_uaqxsf.jpg",
       alt: "Traditional Advertisement",
     },
-
     {
       src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050089/WhatsApp_Image_2025-10-20_at_12.25.38_AM_isdi7k.jpg",
       alt: "Traditional Advertisement",
@@ -26,23 +25,25 @@ export default function AboutUsPage() {
     {
       src: "https://res.cloudinary.com/dnonho9dg/image/upload/v1761050079/WhatsApp_Image_2025-10-19_at_10.59.47_PM_sk4jdx.jpg",
       alt: "Modern Digital Signage",
-    }
+    },
   ];
 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-gray-50 font-sans w-full px-0 sm:px-4 md:px-8 pt-32">
+      <main className="min-h-screen bg-gray-50 font-sans w-full px-2 sm:px-4 md:px-8 pt-32">
         <FloatingContactButton />
 
         {/* ---------- Hero Section ---------- */}
-        <section className="max-w-7xl mx-auto px-0 sm:px-4 text-center space-y-6">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 drop-shadow-lg tracking-tight">
+        <section className="max-w-7xl mx-auto text-center space-y-6 px-2 sm:px-4">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 drop-shadow-lg tracking-tight leading-tight">
             About <span className="text-teal-500">Us</span>
           </h1>
-          <p className="text-gray-600 md:text-lg max-w-3xl mx-auto leading-relaxed">
+          <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
             Proudly serving businesses for over{" "}
-            <span className="font-semibold text-teal-600">27 years</span>, we blend tradition with innovation to deliver standout advertising solutions.
+            <span className="font-semibold text-teal-600">27 years</span>, we
+            blend tradition with innovation to deliver standout advertising
+            solutions.
           </p>
         </section>
 
@@ -52,36 +53,50 @@ export default function AboutUsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-20 max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center"
+          className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center"
         >
           <Image
             src="https://res.cloudinary.com/dnonho9dg/image/upload/v1761059393/name_csv3cv.jpg"
             alt="Our Story"
             width={800}
             height={400}
-            className="w-full rounded-2xl shadow-lg object-cover h-80 md:h-[400px]"
+            className="w-full rounded-2xl shadow-lg object-cover h-56 sm:h-72 md:h-[400px]"
           />
           <div>
-            <h2 className="text-4xl font-bold text-teal-600 mb-4 tracking-wide">Our Story</h2>
-            <p className="text-gray-700 mb-4 leading-relaxed">
-              For over <span className="font-semibold text-teal-600">27 years</span>, we’ve transformed spaces with impactful signage — from hand-painted murals to digital displays — combining creativity, precision, and passion.
+            <h2 className="text-3xl sm:text-4xl font-bold text-teal-600 mb-4 tracking-wide">
+              Our Story
+            </h2>
+            <p className="text-gray-700 mb-4 leading-relaxed text-base sm:text-lg">
+              For over{" "}
+              <span className="font-semibold text-teal-600">27 years</span>, we’ve
+              transformed spaces with impactful signage — from hand-painted
+              murals to digital displays — combining creativity, precision, and
+              passion.
             </p>
-            <p className="text-gray-700 leading-relaxed">
-              Our team bridges the gap between classical methods and modern technologies, ensuring every project reflects both authenticity and innovation.
+            <p className="text-gray-700 leading-relaxed text-base sm:text-lg">
+              Our team bridges the gap between classical methods and modern
+              technologies, ensuring every project reflects both authenticity and
+              innovation.
             </p>
 
             {/* ---------- Stats Block ---------- */}
-            <div className="mt-8 flex gap-8 justify-center md:justify-start">
+            <div className="mt-8 flex flex-wrap gap-8 justify-center md:justify-start">
               <div className="text-center">
-                <h3 className="text-5xl font-extrabold text-teal-500">27+</h3>
+                <h3 className="text-4xl sm:text-5xl font-extrabold text-teal-500">
+                  27+
+                </h3>
                 <p className="text-gray-700 font-medium">Years of Excellence</p>
               </div>
               <div className="text-center">
-                <h3 className="text-5xl font-extrabold text-teal-500">1200+</h3>
+                <h3 className="text-4xl sm:text-5xl font-extrabold text-teal-500">
+                  1200+
+                </h3>
                 <p className="text-gray-700 font-medium">Projects Completed</p>
               </div>
               <div className="text-center">
-                <h3 className="text-5xl font-extrabold text-teal-500">900+</h3>
+                <h3 className="text-4xl sm:text-5xl font-extrabold text-teal-500">
+                  900+
+                </h3>
                 <p className="text-gray-700 font-medium">Happy Clients</p>
               </div>
             </div>
@@ -94,23 +109,33 @@ export default function AboutUsPage() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.1, delay: 0.1 }}
-          className="mt-32 max-w-7xl mx-auto px-4 space-y-12"
+          className="mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-teal-600 border-l-4 border-teal-400 pl-4 tracking-wide">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-teal-600 border-l-4 border-teal-400 pl-4 tracking-wide">
             Our Unique Approach
           </h2>
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <div className="space-y-6">
               <div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">Traditional Advertising</h3>
-                <p className="text-gray-700">
-                  Hand-painted murals, artistic signage, and custom-crafted pieces make each advertisement unique and memorable. These methods evoke a sense of craftsmanship that modern digital signage sometimes lacks.
+                <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                  Traditional Advertising
+                </h3>
+                <p className="text-gray-700 text-base sm:text-lg">
+                  Hand-painted murals, artistic signage, and custom-crafted
+                  pieces make each advertisement unique and memorable. These
+                  methods evoke a sense of craftsmanship that modern digital
+                  signage sometimes lacks.
                 </p>
               </div>
               <div>
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">Modern Digital Signage</h3>
-                <p className="text-gray-700">
-                  In the fast-paced digital age, LED displays, interactive kiosks, and dynamic content allow us to engage audiences in real-time. We integrate these with traditional approaches for a comprehensive advertising strategy.
+                <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                  Modern Digital Signage
+                </h3>
+                <p className="text-gray-700 text-base sm:text-lg">
+                  In the fast-paced digital age, LED displays, interactive kiosks,
+                  and dynamic content allow us to engage audiences in real-time.
+                  We integrate these with traditional approaches for a
+                  comprehensive advertising strategy.
                 </p>
               </div>
             </div>
@@ -119,10 +144,12 @@ export default function AboutUsPage() {
         </motion.section>
 
         {/* ---------- Contact CTA ---------- */}
-        <section className="text-center py-20 bg-gradient-to-r from-teal-400 to-cyan-400 text-white mt-32">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg tracking-tight">Want to Work With Us?</h2>
+        <section className="text-center py-20 bg-gradient-to-r from-teal-400 to-cyan-400 text-white mt-32 px-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg tracking-tight">
+            Want to Work With Us?
+          </h2>
           <a href="/contact">
-            <Button className="bg-white text-teal-500 font-bold px-10 py-4 rounded-full shadow-lg hover:scale-105 transform transition">
+            <Button className="bg-white text-teal-500 font-bold px-8 sm:px-10 py-3 sm:py-4 rounded-full shadow-lg hover:scale-105 transform transition">
               Contact Us Today
             </Button>
           </a>
@@ -133,7 +160,7 @@ export default function AboutUsPage() {
   );
 }
 
-// Modern Image Slider with Arrows + Dots
+// -------------------- Image Slider Component --------------------
 function ImageSlider({ images }: { images: { src: string; alt: string }[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -146,7 +173,8 @@ function ImageSlider({ images }: { images: { src: string; alt: string }[] }) {
   }, [images.length]);
 
   const next = () => setCurrentIndex((prev) => (prev + 1) % images.length);
-  const prev = () => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  const prev = () =>
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   const goTo = (index: number) => setCurrentIndex(index);
 
   return (
@@ -157,14 +185,14 @@ function ImageSlider({ images }: { images: { src: string; alt: string }[] }) {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
-          className="w-full object-cover h-80 md:h-[400px]"
+          className="w-full"
         >
           <Image
             src={images[currentIndex].src}
             alt={images[currentIndex].alt}
             width={800}
             height={400}
-            className="w-full object-cover h-80 md:h-[400px]"
+            className="w-full h-56 sm:h-72 md:h-96 object-cover rounded-2xl"
           />
         </motion.div>
       </AnimatePresence>
@@ -192,7 +220,9 @@ function ImageSlider({ images }: { images: { src: string; alt: string }[] }) {
             key={index}
             onClick={() => goTo(index)}
             className={`w-3 h-3 rounded-full transition ${
-              currentIndex === index ? "bg-teal-500" : "bg-white/50 hover:bg-teal-400/70"
+              currentIndex === index
+                ? "bg-teal-500"
+                : "bg-white/50 hover:bg-teal-400/70"
             }`}
           />
         ))}
