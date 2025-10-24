@@ -166,53 +166,61 @@ const hardcodedServices: Category[] = [
 export default function ServicesPage() {
   const [services, setServices] = useState<Category[]>(hardcodedServices);
   useEffect(() => {
-    async function fetchServices() {
+    async function fetchServices(): Promise<void> {
       try {
         const [categoriesRes, itemsRes, subitemsRes] = await Promise.all([
-          // fetch("http://localhost:5000/api/categories"),
-          // fetch("http://localhost:5000/api/items"),
-          // fetch("http://localhost:5000/api/subitems")
           fetch("https://signage-hub.onrender.com/api/categories"),
           fetch("https://signage-hub.onrender.com/api/items"),
-          fetch("http://signage-hub.onrender.com/api/subitems")
+          fetch("https://signage-hub.onrender.com/api/subitems"),
         ]);
-        const categories = await categoriesRes.json();
-        const items = await itemsRes.json();
-        const subitems = await subitemsRes.json();
-        const itemsWithSubitems = items.map((item: Service & { _id: string; category?: string | { _id: string } }) => {
-          const subItemsForItem = subitems.filter((sub: SubItem & { item?: string | { _id: string }; description?: string }) => {
-            if (sub.item && typeof sub.item === 'object' && '_id' in sub.item) {
-              return (sub.item as { _id: string })._id === item._id;
-            }
-            return sub.item === item._id;
-          }).map((sub: SubItem & { description?: string }) => ({
-            name: sub.name,
-            desc: sub.description ?? sub.desc,
-            image: sub.image
-          }));
-          return {
-            ...item,
-            subItems: subItemsForItem
-          };
+
+        // Define proper response types
+        type CategoryResponse = { name: string; _id: string };
+        type ItemResponse = Service & { _id: string; category?: string | { _id: string } };
+        type SubitemResponse = SubItem & { item?: string | { _id: string }; description?: string };
+
+        const categories: CategoryResponse[] = await categoriesRes.json();
+        const items: ItemResponse[] = await itemsRes.json();
+        const subitems: SubitemResponse[] = await subitemsRes.json();
+
+        const itemsWithSubitems: ItemResponse[] = items.map((item) => {
+          const subItemsForItem: SubItem[] = subitems
+            .filter((sub) => {
+              if (sub.item && typeof sub.item === "object" && "_id" in sub.item) {
+                return (sub.item as { _id: string })._id === item._id;
+              }
+              return sub.item === item._id;
+            })
+            .map((sub) => ({
+              name: sub.name,
+              desc: sub.description ?? sub.desc,
+              image: sub.image,
+            }));
+          return { ...item, subItems: subItemsForItem };
         });
-        const grouped: Category[] = categories.map((cat: { name: string; _id: string }) => ({
+
+        const grouped: Category[] = categories.map((cat) => ({
           category: cat.name,
-          items: itemsWithSubitems.filter((item: Service & { _id: string; category?: string | { _id: string } }) => {
-            if (item.category && typeof item.category === 'object' && '_id' in item.category) {
-              return (item.category as { _id: string })._id === cat._id;
-            }
-            return item.category === cat._id;
-          }).map((item: Service & { name: string; description?: string; _id: string; bestseller?: boolean; subItems?: SubItem[] }) => ({
-            title: item.name,
-            desc: item.description ?? item.desc,
-            bestseller: item.bestseller,
-            subItems: item.subItems || []
-          }))
+          items: itemsWithSubitems
+            .filter((item) => {
+              if (item.category && typeof item.category === "object" && "_id" in item.category) {
+                return (item.category as { _id: string })._id === cat._id;
+              }
+              return item.category === cat._id;
+            })
+            .map((item) => ({
+              title: item.title ?? (item as any).name,
+              desc: (item as any).description ?? item.desc,
+              bestseller: item.bestseller,
+              subItems: item.subItems || [],
+            })),
         }));
-        if (grouped.some(cat => cat.items.length > 0)) {
+
+        if (grouped.some((cat) => cat.items.length > 0)) {
           setServices(grouped);
         }
-      } catch {
+      } catch (error) {
+        console.error("Error fetching services:", error);
         setServices([]);
       }
     }
