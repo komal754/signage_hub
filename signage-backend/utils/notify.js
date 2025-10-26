@@ -1,52 +1,34 @@
-const nodemailer = require('nodemailer');
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.sendgrid.net',
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: 'apikey', // this is literally the string 'apikey'
-    pass: process.env.SENDGRID_API_KEY,
-  },
-});
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
 const notifyAdmin = async (contact) => {
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER, // verified sender
+    await sgMail.send({
       to: ADMIN_EMAIL,
+      from: process.env.EMAIL_USER, // must be verified in SendGrid
       subject: 'New Contact Submission',
       text: `New contact:\nName: ${contact.name}\nEmail: ${contact.email}\nPhone: ${contact.phone}\nMessage: ${contact.message}`,
     });
-      // console.log('Admin notification email sent successfully');
+    console.log('✅ Admin email sent');
   } catch (err) {
-    console.error('Error sending admin notification email:', err);
-    throw err;
+    console.error('❌ Admin email failed:', err.response?.body || err.message);
   }
 };
 
 const notifyCustomer = async (contact, template) => {
   try {
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER, // verified sender
+    await sgMail.send({
       to: contact.email,
+      from: process.env.EMAIL_USER,
       subject: 'Thank you for your inquiry',
       text: template,
     });
-      // console.log('Customer notification email sent successfully:', info.response);
+    console.log('✅ Customer email sent');
   } catch (err) {
-    console.error('Error sending customer notification email:', {
-      message: err.message,
-      stack: err.stack,
-      response: err.response,
-      code: err.code,
-      ...err
-    });
-    throw err;
+    console.error('❌ Customer email failed:', err.response?.body || err.message);
   }
-  // Log customer email status for local testing
-  // console.log('Customer email status:', customerEmailStatus, customerEmailError);
 };
 
 module.exports = { notifyAdmin, notifyCustomer };
