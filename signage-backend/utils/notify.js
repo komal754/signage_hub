@@ -4,6 +4,9 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
 const notifyAdmin = async (contact) => {
+  // Email sending disabled: skipping SendGrid to avoid charges
+  // Uncomment below to enable email notifications
+  /*
   try {
     await sgMail.send({
       to: ADMIN_EMAIL,
@@ -15,9 +18,13 @@ const notifyAdmin = async (contact) => {
   } catch (err) {
     console.error('❌ Admin email failed:', err.response?.body || err.message);
   }
+  */
 };
 
 const notifyCustomer = async (contact, template) => {
+  // Email sending disabled: skipping SendGrid to avoid charges
+  // Uncomment below to enable email notifications
+  /*
   try {
     await sgMail.send({
       to: contact.email,
@@ -29,6 +36,7 @@ const notifyCustomer = async (contact, template) => {
   } catch (err) {
     console.error('❌ Customer email failed:', err.response?.body || err.message);
   }
+  */
 };
 
 module.exports = { notifyAdmin, notifyCustomer };
