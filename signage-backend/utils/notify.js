@@ -2,9 +2,11 @@ const nodemailer = require('nodemailer');
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
 const transporter = nodemailer.createTransport({
-  service: 'SendGrid',
+  host: 'smtp.sendgrid.net',
+  port: 587,
+  secure: false, // true for 465, false for other ports
   auth: {
-    user: 'apikey',
+    user: 'apikey', // this is literally the string 'apikey'
     pass: process.env.SENDGRID_API_KEY,
   },
 });
