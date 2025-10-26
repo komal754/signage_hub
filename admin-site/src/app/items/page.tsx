@@ -362,7 +362,7 @@ function SubitemAdmin({ subitems, setSubitems, items, categories }: { subitems: 
                 key={sub._id}
                 className="bg-white p-4 rounded-lg shadow hover:shadow-lg transition transform hover:-translate-y-1"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {/* img element allowed by design */}
                 <Image
                   src={sub.image || "/placeholder.png"}
                   alt={sub.name}

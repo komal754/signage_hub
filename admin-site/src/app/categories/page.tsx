@@ -16,8 +16,8 @@ export default function CategoriesPage() {
   const res = await fetch("https://signage-hub.onrender.com/api/categories");
         const data = await res.json();
         setCategories(data);
-      } catch (err) {
-        console.error(err);
+  } catch {
+    console.error("Error fetching categories");
       } finally {
         setLoading(false);
       }
@@ -38,7 +38,7 @@ export default function CategoriesPage() {
       const added = await res.json();
       setCategories([...categories, added]);
       setNewCategory("");
-    } catch (err) {
+  } catch {
       alert("Error adding category");
     } finally {
       setAdding(false);

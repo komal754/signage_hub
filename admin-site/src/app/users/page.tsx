@@ -17,7 +17,7 @@ export default function UsersPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    let demo = [
+  const demo = [
       { username: "admin", password: "admin" },
       { username: "manager", password: "manager123" },
     ];

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Layers, Package } from "lucide-react"; // icons
+import { Package } from "lucide-react"; // icons
 
 export default function AdminDashboard() {
   return (
