@@ -894,7 +894,7 @@ const TestimonialCarousel: React.FC<{ items: { quote: string; name: string; role
               quote:
                 "Best signage and painting work in Bhiwadi. Professional service, creative designs, and great value for money.",
               name: "Priya Mehta",
-              role: "Café Bloom",
+              role: "Cafe Bloom",
             },
             {
               quote:
