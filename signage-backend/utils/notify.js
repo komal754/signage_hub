@@ -2,10 +2,10 @@ const nodemailer = require('nodemailer');
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: 'SendGrid',
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: 'apikey', // This is always 'apikey' for SendGrid
+    pass: process.env.SENDGRID_API_KEY, // Store your API key in Render env vars
   },
 });
 
