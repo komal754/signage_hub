@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function AdminSidebar() {
   return (
-    <aside className="h-screen w-64 bg-gray-900 text-white flex flex-col py-8 px-4 fixed left-0 top-0 shadow-lg">
+    <aside className="admin-sidebar h-screen w-64 bg-gray-900 text-white flex flex-col py-8 px-4 fixed left-0 top-0 shadow-lg">
       <div className="mb-10 text-center">
         <h2 className="text-2xl font-bold">Admin Panel</h2>
         <span className="text-sm text-gray-400">Signage & Printing Workshop</span>

@@ -1,5 +1,5 @@
 "use client";
-
+import { Navbar, Footer } from "@/components/SharedLayout";
 import { useState, useEffect,useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import FloatingContactButton from "@/components/FloatingContactButton";
+import {useReducedMotion } from "framer-motion";
 
 // Fetch carousel images from backend
 type CarouselImage = {
@@ -98,7 +99,13 @@ const COLLAGE_IMAGES: Record<"signage" | "painting", string[]> = {
 
   ],
 };
+//for hero section
+  const reduceMotion = useReducedMotion();
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
+  };
 
 ///for gallery collage
 const [orbitSpread, setOrbitSpread] = useState(false);
@@ -363,7 +370,7 @@ const TestimonialCarousel: React.FC<{ items: { quote: string; name: string; role
   <main className="min-h-screen bg-gray-50 font-sans w-full px-0">
 
   {/* Navbar */}
-      <nav className="w-full px-0 sm:px-4 md:px-8 py-4 flex items-center justify-between fixed top-0 z-50 bg-black/40 backdrop-blur-md shadow-lg transition-all duration-500">
+      {/* <nav className="w-full px-0 sm:px-4 md:px-8 py-4 flex items-center justify-between fixed top-0 z-50 bg-black/40 backdrop-blur-md shadow-lg transition-all duration-500">
         <div className="flex items-center gap-4">
           <Image src="/logo.png" alt="Logo" width={80} height={80} className="rounded-md shadow-md" />
           <span className="text-white text-2xl font-extrabold tracking-wide">
@@ -371,7 +378,6 @@ const TestimonialCarousel: React.FC<{ items: { quote: string; name: string; role
           </span>
         </div>
 
-        {/* Mobile Hamburger */}
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -398,43 +404,124 @@ const TestimonialCarousel: React.FC<{ items: { quote: string; name: string; role
             <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-teal-400 transition-all group-hover:w-full"></span>
           </Link>
         </div>
-      </nav>
+      </nav> */}
+      <Navbar />
+      
 
     {/* Hero Section */}
-  <section id="about" className="relative w-full h-[90vh] flex items-center justify-center text-center overflow-hidden pt-24 px-0">
-        <Image src="/hero-bg.jpg" alt="Workshop" fill style={{ objectFit: "cover" }} priority />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
-        <div className="relative z-10 px-6 max-w-4xl">
+    <section
+      id="about"
+      aria-label="About — hero"
+      className="relative w-full min-h-[88vh] flex items-center justify-center text-center overflow-hidden pt-24 px-4"
+    >
+      {/* Background image */}
+      <Image
+        src="/hero-bg.jpg"
+        alt="Workshop"
+        fill
+        style={{ objectFit: "cover" }}
+        priority
+        className="transform-gpu will-change-transform"
+      />
+
+      {/* Gradient overlay — retains brand shades while improving contrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/72" />
+
+      {/* Soft vignette for focus */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.25),_transparent_60%)]" />
+      </div>
+
+      {/* Content card */}
+      <div className="relative z-10 w-full max-w-5xl">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          variants={!reduceMotion ? { show: { transition: { staggerChildren: 0.06 } } } : {}}
+          className="mx-auto backdrop-blur-sm bg-white/6 rounded-2xl p-6 sm:p-10 md:p-12 shadow-2xl border border-white/8"
+        >
           <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white drop-shadow-lg leading-tight mb-6"
+            variants={fadeUp}
+            className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight tracking-tight mb-4"
           >
-            One-Stop <span className="text-teal-400">Signage</span> & <span className="text-amber-400">Printing</span> Solutions
+            One-Stop <span className="text-teal-400">Signage</span>
+            <span className="mx-2 text-white/75">&</span>
+            <span className="text-amber-400">Printing</span>
+            <span className="hidden md:inline"> Solutions</span>
           </motion.h1>
+
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="text-lg md:text-2xl text-gray-200 leading-relaxed mb-8"
+            variants={fadeUp}
+            transition={{ delay: 0.08 }}
+            className="text-base md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-6"
           >
-            <span className="font-semibold text-teal-300">The Ultimate Advertising Solution</span><br />
-            Modern, high-quality signage, printing & painting for every business.
+            <span className="font-semibold text-teal-300">The Ultimate Advertising Solution</span>
+            <br />
+            Modern, high-quality signage, printing & painting for businesses that want to be seen — on time and on brand.
           </motion.p>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="flex gap-4 flex-wrap justify-center">
-            <Link href="/services">
-              <Button className="bg-teal-400 text-black hover:bg-teal-500 px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-teal-500/40 transition">View Services</Button>
+
+          {/* CTAs */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ delay: 0.16 }}
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
+            role="group"
+            aria-label="Primary calls to action"
+          >
+             <Link
+              href="/services"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold shadow-xl transform hover:-translate-y-0.5 transition-transform bg-teal-400 text-black focus:outline-none focus:ring-4 focus:ring-teal-300/40"
+              aria-label="View Services"
+            >
+              View Services
             </Link>
-            <Link href="/about">
-              <Button className="bg-amber-400 text-white hover:bg-amber-500 px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-amber-400/40 transition">About Us</Button>
+
+            <Link
+              href="/about"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold shadow-md transition-transform hover:scale-[1.02] bg-amber-400 text-white focus:outline-none focus:ring-4 focus:ring-amber-300/30"
+              aria-label="About Us"
+            >
+              About Us
             </Link>
-            <Link href="/contact">
-              <Button className="bg-teal-500 text-white hover:bg-teal-600 px-8 py-4 rounded-full font-bold shadow-xl hover:shadow-teal-500/40 transition">Contact</Button>
+
+            <Link
+              href="/contact"
+              className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 rounded-full font-semibold shadow-lg transition-transform hover:scale-[1.02] bg-teal-500 text-white focus:outline-none focus:ring-4 focus:ring-teal-400/30"
+              aria-label="Contact"
+            >
+              Contact
             </Link>
           </motion.div>
+
+          {/* Small trust row */}
+          <motion.div
+            variants={fadeUp}
+            transition={{ delay: 0.24 }}
+            className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-gray-300/90 text-center"
+          >
+            <div>
+              <div className="font-semibold text-white">27+</div>
+              <div className="text-gray-300/80">Years crafting signage</div>
+            </div>
+            <div>
+              <div className="font-semibold text-white">1000+</div>
+              <div className="text-gray-300/80">Projects delivered</div>
+            </div>
+            <div>
+              <div className="font-semibold text-white">Nationwide</div>
+              <div className="text-gray-300/80">Delivery & installation</div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Decorative curve for smooth transition */}
+        <div className="mt-6 -mb-6 pointer-events-none" aria-hidden>
+          <svg viewBox="0 0 1440 72" className="w-full h-18 block" preserveAspectRatio="none">
+            <path d="M0,30 C360,90 1080,0 1440,40 L1440,72 L0,72 Z" fill="rgba(255,255,255,0.03)" />
+          </svg>
         </div>
-      </section>
+      </div>
+    </section>
 
     {/* Portfolio Section */}
   <section id="services" className="relative w-full py-20 px-0 bg-gradient-to-b from-gray-50 via-white to-gray-100">
@@ -952,7 +1039,7 @@ const TestimonialCarousel: React.FC<{ items: { quote: string; name: string; role
   <a href="/contact" className="bg-white text-teal-500 font-bold px-10 py-4 rounded-full shadow-lg hover:scale-105 transform transition inline-block">Get Started Today</a>
       </section>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="w-full bg-black py-14 px-0 sm:px-8 text-gray-300 border-t border-teal-500/40">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="flex flex-col gap-4">
@@ -974,7 +1061,7 @@ const TestimonialCarousel: React.FC<{ items: { quote: string; name: string; role
                   signageworks483@gmail.com
                 </a>, 
                 {/* <br /> */}
-                <a href="mailto:info@signworkshop.com" className="underline text-teal-400 hover:text-teal-300 ml-1">
+                {/* <a href="mailto:info@signworkshop.com" className="underline text-teal-400 hover:text-teal-300 ml-1">
                   narendraart.720@gmail.com
                 </a>
               </p>
@@ -995,16 +1082,18 @@ const TestimonialCarousel: React.FC<{ items: { quote: string; name: string; role
             <h3 className="text-lg font-semibold text-white">Quick Links</h3>
             <div className="flex flex-col gap-2">
               <a href="#about" className="hover:text-teal-400">About Us</a>
-              <a href="#services" className="hover:text-teal-400">Services</a>
+              <a href="#services" className="hover:text-teal-400">Services</a> */}
               {/* <a href="#portfolio" className="hover:text-teal-400">Portfolio</a> */}
-              <a href="#contact" className="hover:text-teal-400">Contact</a>
+              {/* <a href="#contact" className="hover:text-teal-400">Contact</a>
             </div>
           </div>
         </div>
         <div className="mt-10 text-center text-sm text-gray-500 border-t border-gray-700 pt-6">
           © {new Date().getFullYear()} Signage & Printing Solutions. All rights reserved.
         </div>
-      </footer>
+      </footer>  */}
+      <Footer />
+
   </main>
   </>
   );
